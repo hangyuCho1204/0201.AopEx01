@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<bean id="dog" class="spring.ex01.aop.Dog"/>
+	<bean id="cat" class="spring.ex01.aop.Cat"/>
+	<bean id="animal" class="spring.ex01.aop.Animal"/>
+		
+	<aop:config>
+		<aop:aspect ref="animal">
+			<aop:pointcut expression="execution(* *.eat(..))" id="eating"/>
+			<aop:before method="rush" pointcut-ref="eating"/> 
+			<aop:after method="sleep" pointcut-ref="eating"/>
+			<!--<aop:after-returning method=""/> 전에 실행된 메소드가 리턴 값을 반환하면 싱행해라는 뜻 -->
+			<!--<aop:after-throwing method=""/> 전에 실행된 메소드가 exception이 발생하면 실행해라는 뜻 -->
+		</aop:aspect>
+	</aop:config>
+	<!-- 
+		aop 용어
+	
+		1.어드바이스 : 애스팩트가 무엇을 언제 할 지 정의
+		2.조인포인트(모든 메소드) > 포인트 컷(특정 정의된 메소드) : 애스팩트가 어디서 살지 정의
+		3. 애스팩트 : 공통기능 구현한 클래스 + 어드바이스 + 포인트 컷
+		4. 위빙 : 애스팩트에서 선언된 어드바이스가 포인트 컷에 들어가는 과정을 이야기함.
+	 -->
+	
+</beans>
